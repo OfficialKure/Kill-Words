@@ -1,0 +1,348 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600);
+
+$font: "Source Code Pro";
+
+$black: #404040;
+$black-dark: darken($black, 10%);
+$blue: #4CC3D9;
+$blue-dark: darken($blue, 10%);
+$red: #F16745;
+$red-dark: darken($red, 10%);
+$orange: #FFC65D;
+$orange-dark: darken($orange, 10%);
+$green: #7BC8A4;
+$green-dark: darken($green, 10%);
+
+$height: 600px;
+$width: 600px;
+$hero-di: 50px;
+$proj-di: 10px;
+$proj-di-fact: 50px;
+
+body {
+  background: $black-dark;
+  font-family: $font, monospace;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+#hero {
+  position: absolute;
+  display: block;
+  left: ($width / 2) - ($hero-di / 2);
+  bottom: calc(10% - #{$hero-di / 2});
+  width: $hero-di; height: $hero-di;
+  line-height: $hero-di;
+  text-align: center;
+  background: $blue;
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px 4px $blue-dark;
+  z-index: 8;
+  transform-origin: 50% 50%;
+  .active & {
+    animation: dance (1s / 1.933) alternate linear infinite;
+  }
+}
+
+#bloodshed {
+  position: absolute;
+  top: 0; left: 0;
+}
+
+figure#context {
+  position: absolute;
+  left: calc(50% - 300px);
+  top: calc(50% - 300px);
+  width: 600px;
+  height: 600px;
+  overflow: hidden;
+  margin: 0 auto;
+  box-shadow: 0px 0px 0px 4px rgba(black, 0.5);
+  
+  &::before {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/111863/baddies.jpg);
+    filter: blur(1px);
+    content: "";
+    z-index: 0;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+div.level-notify {
+  position: absolute;
+  text-align: center;
+  bottom: calc(10% + 30px); left: 50%;
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) translateZ(0) scale(1.2);
+  animation: level-enter 2000ms ease-in forwards;
+  font-size: 2rem;
+  color: $blue-dark;
+  text-shadow: 1px 1px 0px rgba(white,0.2);
+  line-height: 1;
+}
+
+div.screen {
+  display: flex;
+  position: absolute;
+  top: 0; right: 0; left: 0; bottom: 0;
+  z-index: 10;
+  height: 100%;
+  flex-direction: column;
+  transition: opacity 250ms ease-out;
+  visibility: hidden;
+  opacity: 0;
+  background: rgba(#000, 0.8);
+  color: white;
+  line-height: 1.6;
+  
+  header, main, footer {
+    margin: 1rem auto;
+    width: 90%;
+    overflow: scroll;
+  }
+  
+  footer {
+    margin-top: 2rem;
+  }
+  
+  header {
+    padding-top: 2rem;
+  }
+  
+  h1, h2, button {
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  
+  footer > div {
+    text-align: center;
+    padding: 0.5rem 0 0;
+    
+    label, input {
+      display: block;
+      margin: 0 auto;
+    }
+    
+    label {
+      margin-bottom: 0.25rem;
+    }
+    
+    input {
+      background: $black;
+      border: none;
+      text-align: center;
+      width: 40px;
+      padding: 0.5rem 0 0.5rem 0.5rem;
+      //appearance: none;
+    }
+  }
+  
+  p, ol, ul {
+    //font-size: 0.8rem;
+  }
+  
+  ol {
+    width: 70%;
+    margin: 1rem auto;
+  }
+  
+  header, h2, p, footer {
+    text-align: center;
+  }
+  
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  button {
+    background: $green;
+    appearance: none;
+    border: $green-dark;
+    padding: 1rem 2rem;
+    &:hover, &:active {
+      background: $green-dark;
+    }
+  }
+}
+
+#result, .result {
+  width: 100%;
+  overflow: scroll;
+  //background: $blue;
+  padding: 1rem;
+  box-sizing: border-box;
+  ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  li {
+    min-width: 14.285714286%;
+    &.full {
+      margin-top: 1rem;
+      width: 100%;
+    }
+  }
+  span {
+    display: block;
+  }
+  span.label {
+    font-weight: bold;
+    margin-right: 0.2em;
+  }
+  span.code {
+    display: block;
+    white-space: pre;
+  }
+}
+
+span.projectile {
+  position: absolute;
+  display: block;
+  top: $proj-di / -2;
+  left: $proj-di / -2;
+  border-radius: 50%;
+  height: $proj-di;
+  width: $proj-di;
+  background: $orange;
+  transform-origin: 50% 50%;
+  transform: translate3d(0, 0, 0);
+  transition: transform 200ms linear;
+  z-index: 7;
+}
+
+div.baddie {
+  position: absolute;
+  background: rgba($black-dark, 0.5);
+  color: white;
+  font-size: 0.8rem;
+  text-align: center;
+  transform: translate3d($width / 2, -100px, 0);
+  transform-origin: 50% 50%;
+  padding: 0.2em 0.4em;
+  top: 0; left: 0;
+  z-index: 8;
+  opacity: 0;
+  animation: enter 500ms ease-out forwards;
+  transition: 
+    transform 200ms linear;
+  
+  &.active {
+    z-index: 9;
+    background: rgba($black-dark, 0.9);
+  }
+  
+  span {
+    &.hit {
+      color: $red;
+      animation: hit 200ms ease-in-out;
+    }
+  }
+  &.killed {
+    animation: kill 300ms ease-in forwards;
+  }
+}
+
+@for $i from 1 through 10 {
+  $rat: $i / 10;
+  $influx: 2;
+  $amt: 1 + $influx * $rat;
+  
+  div.baddie.baddie-lvl-#{$i} {
+    font-size: 0.6rem * $amt;
+  }
+  
+  span.projectile-#{$i} {
+    animation: explode-#{$i} 200ms ease-in-out 200ms forwards;
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      width: $proj-di-fact * $amt; 
+      height: $proj-di-fact * $amt;
+      border-radius: 50%;
+      background: rgba($red-dark, 0.02);
+      transform-origin: 50% 50%;
+      transform: translate(-50%, -50%) scale(0.01);
+      animation: explode-#{$i}-after 200ms ease-in-out 200ms forwards;
+    }
+  }
+  
+  @keyframes explode-#{$i} {
+    to {
+      background: rgba($orange-dark, 0.02); 
+      background: rgba($orange-dark, 0);
+    }
+  }
+  @keyframes explode-#{$i}-after {
+    from {
+      transform: translate(-50%, -50%) scale(0.01); 
+      background: $orange-dark;
+    }
+    to {  
+      transform: translate(-50%, -50%) scale(1); 
+      background: rgba($red-dark, 0.02);
+    }
+  }
+}
+
+#audio-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+  
+  svg {
+    fill: white;
+    stroke: white;
+    width: 30px; height: auto;
+  }
+  
+  .on { display: block; }
+  .off { display: none; }
+  &.muted {
+    .on { display: none; }
+    .off { display: block; }
+  }
+}
+
+@keyframes hit {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes kill {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes enter {
+  to { opacity: 1; }
+}
+
+@keyframes dance {
+  from { transform: skew(2deg, 2deg) scale(0.95); }
+  to { transform: skew(-2deg, -2deg) scale(1.05); }
+}
+
+@keyframes dance-bg {
+  from { left: 0; right: 0; }
+  to { left: -0.25rem; right: -0.25rem; }
+}
+
+@keyframes level-enter {
+  0% { opacity: 0; transform: translate(-50%, -50%) translateZ(0) scale(1.2); }
+  30%, 80% { opacity: 1; transform: translate(-50%, -50%) translateZ(0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) translateZ(0) scale(1); }
+}
